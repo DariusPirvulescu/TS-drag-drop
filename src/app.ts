@@ -1,16 +1,20 @@
-const btn = document.getElementById("load")
+class Project {
+  template: HTMLTemplateElement
+  hostContainer: HTMLDivElement
+  formElement: HTMLFormElement
 
+  constructor() {
+    this.template = document.getElementById("project-input")! as HTMLTemplateElement
+    this.hostContainer = document.getElementById("app")! as HTMLDivElement
 
-function show() {
-  const template = document.querySelector("template")!
-  const clone = template.content.cloneNode(true)
-  const app = document.getElementById("app")!
-  app.appendChild(clone)
-  console.log("CLI")
+    const importedNote = document.importNode(this.template.content, true)
+    this.formElement = importedNote.firstElementChild as HTMLFormElement
+  }
+
+  attatch() {
+    this.hostContainer.insertAdjacentElement("afterbegin", this.formElement)
+  }
 }
 
-btn?.addEventListener("click", function() {
-  show()
-})
-
-
+const pr = new Project()
+pr.attatch();
