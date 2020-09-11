@@ -1,4 +1,4 @@
-// autobind Decorator
+// Autobind Decorator
 function Binder(_: any, _2: string, descriptor: PropertyDescriptor) {
   const method = descriptor.value
 
@@ -11,6 +11,40 @@ function Binder(_: any, _2: string, descriptor: PropertyDescriptor) {
     }
   }
   return adjustDescriptor
+}
+
+// Validation
+interface Validatable {
+  value: string | number,
+  required?: boolean,
+  minLength?: number,
+  maxLength?: number,
+  min?: number,
+  max?: number
+}
+
+function validate(validateInput: Validatable) { 
+  // ! destructure
+  let isValid = true;
+  if (validateInput.required) {
+    isValid = isValid && validateInput.value.toString().trim().length != 0
+  }
+
+  if (validateInput.minLength != null && typeof validateInput.value === "string") {
+    isValid = isValid && validateInput.value.length >= validateInput.minLength
+  }
+
+  if (validateInput.maxLength != null && typeof validateInput.value === "string") {
+    isValid = isValid && validateInput.value.length <= validateInput.maxLength
+  }
+
+  if (validateInput.min && typeof validateInput.value === "number") {
+    isValid = isValid && validateInput.value >= validateInput.min
+  }
+  if (validateInput.max && typeof validateInput.value === "number") {
+    isValid = isValid && validateInput.value <= validateInput.max
+  }
+  return isValid
 }
 
 class Project {
@@ -47,13 +81,30 @@ class Project {
     const description = this.descriptionInputEl.value.trim()
     const people = this.peopleInputEl.value.trim()
     
-    if (title.length === 0 ||
-    description.length === 0 ||
-    people.length === 0) {
+    const titleInputCheck: Validatable = {
+      value: title,
+      required: true
+    }
+    const descriptionInputCheck: Validatable = {
+      value: description,
+      required: true,
+      minLength: 5
+    }
+    const peopleInputCheck: Validatable = {
+      value: +people,
+      required: true,
+      min: 1,
+      max: 5
+    }
+
+    if (validate(titleInputCheck) &&
+    validate(descriptionInputCheck) &&
+    validate(peopleInputCheck)
+    ) {
+      return [title, description, +people]
+    } else {
       alert("Invalid Input")
       return;
-    } else {
-      return [title, description, +people]
     }
   }
 
