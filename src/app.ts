@@ -1,109 +1,123 @@
 // Autobind Decorator
 function Binder(_: any, _2: string, descriptor: PropertyDescriptor) {
-  const method = descriptor.value
+  const method = descriptor.value;
 
   const adjustDescriptor: PropertyDescriptor = {
     configurable: true,
     enumerable: false,
     get() {
-      const configFn = method.bind(this)
-      return configFn
-    }
-  }
-  return adjustDescriptor
+      const configFn = method.bind(this);
+      return configFn;
+    },
+  };
+  return adjustDescriptor;
 }
 
 // Validation
 interface Validatable {
-  value: string | number,
-  required?: boolean,
-  minLength?: number,
-  maxLength?: number,
-  min?: number,
-  max?: number
+  value: string | number;
+  required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  min?: number;
+  max?: number;
 }
 
-function validate(validateInput: Validatable) { 
+function validate(validateInput: Validatable) {
   // ! destructure
   let isValid = true;
   if (validateInput.required) {
-    isValid = isValid && validateInput.value.toString().trim().length != 0
+    isValid = isValid && validateInput.value.toString().trim().length != 0;
   }
 
-  if (validateInput.minLength != null && typeof validateInput.value === "string") {
-    isValid = isValid && validateInput.value.length >= validateInput.minLength
+  if (
+    validateInput.minLength != null &&
+    typeof validateInput.value === "string"
+  ) {
+    isValid = isValid && validateInput.value.length >= validateInput.minLength;
   }
 
-  if (validateInput.maxLength != null && typeof validateInput.value === "string") {
-    isValid = isValid && validateInput.value.length <= validateInput.maxLength
+  if (
+    validateInput.maxLength != null &&
+    typeof validateInput.value === "string"
+  ) {
+    isValid = isValid && validateInput.value.length <= validateInput.maxLength;
   }
 
   if (validateInput.min && typeof validateInput.value === "number") {
-    isValid = isValid && validateInput.value >= validateInput.min
+    isValid = isValid && validateInput.value >= validateInput.min;
   }
   if (validateInput.max && typeof validateInput.value === "number") {
-    isValid = isValid && validateInput.value <= validateInput.max
+    isValid = isValid && validateInput.value <= validateInput.max;
   }
-  return isValid
+  return isValid;
 }
 
 class Project {
-  template: HTMLTemplateElement
-  hostContainer: HTMLDivElement
-  formElement: HTMLFormElement
+  template: HTMLTemplateElement;
+  hostContainer: HTMLDivElement;
+  formElement: HTMLFormElement;
 
-  titleInputEl: HTMLInputElement
-  descriptionInputEl: HTMLInputElement
-  peopleInputEl: HTMLInputElement
-
+  titleInputEl: HTMLInputElement;
+  descriptionInputEl: HTMLInputElement;
+  peopleInputEl: HTMLInputElement;
 
   constructor() {
-    this.template = document.getElementById("project-input")! as HTMLTemplateElement
-    this.hostContainer = document.getElementById("app")! as HTMLDivElement
+    this.template = document.getElementById(
+      "project-input"
+    )! as HTMLTemplateElement;
+    this.hostContainer = document.getElementById("app")! as HTMLDivElement;
 
-    const importedNote = document.importNode(this.template.content, true)
-    this.formElement = importedNote.firstElementChild as HTMLFormElement
-    this.formElement.id = "project-form"
+    const importedNote = document.importNode(this.template.content, true);
+    this.formElement = importedNote.firstElementChild as HTMLFormElement;
+    this.formElement.id = "project-form";
 
-    this.titleInputEl = this.formElement.querySelector("#title") as HTMLInputElement
-    this.descriptionInputEl = this.formElement.querySelector("#description") as HTMLInputElement
-    this.peopleInputEl = this.formElement.querySelector("#people") as HTMLInputElement
+    this.titleInputEl = this.formElement.querySelector(
+      "#title"
+    ) as HTMLInputElement;
+    this.descriptionInputEl = this.formElement.querySelector(
+      "#description"
+    ) as HTMLInputElement;
+    this.peopleInputEl = this.formElement.querySelector(
+      "#people"
+    ) as HTMLInputElement;
 
-    this.config()
+    this.config();
   }
 
   attatch() {
-    this.hostContainer.insertAdjacentElement("afterbegin", this.formElement)
+    this.hostContainer.insertAdjacentElement("afterbegin", this.formElement);
   }
 
   private getUserInput(): [string, string, number] | void {
-    const title = this.titleInputEl.value.trim()
-    const description = this.descriptionInputEl.value.trim()
-    const people = this.peopleInputEl.value.trim()
-    
+    const title = this.titleInputEl.value.trim();
+    const description = this.descriptionInputEl.value.trim();
+    const people = this.peopleInputEl.value.trim();
+
     const titleInputCheck: Validatable = {
       value: title,
-      required: true
-    }
+      required: true,
+    };
     const descriptionInputCheck: Validatable = {
       value: description,
       required: true,
-      minLength: 5
-    }
+      minLength: 5,
+    };
     const peopleInputCheck: Validatable = {
       value: +people,
       required: true,
       min: 1,
-      max: 5
-    }
+      max: 5,
+    };
 
-    if (validate(titleInputCheck) &&
-    validate(descriptionInputCheck) &&
-    validate(peopleInputCheck)
+    if (
+      validate(titleInputCheck) &&
+      validate(descriptionInputCheck) &&
+      validate(peopleInputCheck)
     ) {
-      return [title, description, +people]
+      return [title, description, +people];
     } else {
-      alert("Invalid Input")
+      alert("Invalid Input");
       return;
     }
   }
@@ -111,21 +125,21 @@ class Project {
   @Binder
   private getValues(event: Event) {
     event.preventDefault();
-    const userInput = this.getUserInput()
+    const userInput = this.getUserInput();
     if (userInput) {
       // this.titleInputEl.value = ""
       // this.descriptionInputEl.value = ""
       // this.peopleInputEl.value = ""
-      // or 
-      this.formElement.reset(); 
+      // or
+      this.formElement.reset();
     }
-    console.log(userInput)
+    console.log(userInput);
   }
 
   private config() {
-    this.formElement.addEventListener("submit", this.getValues)
+    this.formElement.addEventListener("submit", this.getValues);
   }
 }
 
-const pr = new Project()
+const pr = new Project();
 pr.attatch();
