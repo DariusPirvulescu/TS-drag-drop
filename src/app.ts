@@ -1,8 +1,7 @@
-function Binder(target: any, _: string, descriptor: PropertyDescriptor) {
+// autobind Decorator
+function Binder(_: any, _2: string, descriptor: PropertyDescriptor) {
   const method = descriptor.value
 
-  console.log("Target:: ", target)
-  console.log("meth:: ", descriptor)
   const adjustDescriptor: PropertyDescriptor = {
     configurable: true,
     enumerable: false,
@@ -13,7 +12,6 @@ function Binder(target: any, _: string, descriptor: PropertyDescriptor) {
   }
   return adjustDescriptor
 }
-
 
 class Project {
   template: HTMLTemplateElement
@@ -44,10 +42,33 @@ class Project {
     this.hostContainer.insertAdjacentElement("afterbegin", this.formElement)
   }
 
+  private getUserInput(): [string, string, number] | void {
+    const title = this.titleInputEl.value.trim()
+    const description = this.descriptionInputEl.value.trim()
+    const people = this.peopleInputEl.value.trim()
+    
+    if (title.length === 0 ||
+    description.length === 0 ||
+    people.length === 0) {
+      alert("Invalid Input")
+      return;
+    } else {
+      return [title, description, +people]
+    }
+  }
+
   @Binder
   private getValues(event: Event) {
     event.preventDefault();
-    console.log(this.titleInputEl.value)
+    const userInput = this.getUserInput()
+    if (userInput) {
+      // this.titleInputEl.value = ""
+      // this.descriptionInputEl.value = ""
+      // this.peopleInputEl.value = ""
+      // or 
+      this.formElement.reset(); 
+    }
+    console.log(userInput)
   }
 
   private config() {
