@@ -8,3 +8,17 @@
   background-color: #f7f7f7;
   margin: 5px;
 }
+
+#active-projects-list{
+  list-style: none;
+}
+
+#active-projects-list li {
+  border: 1px solid lightgray;
+  padding: 5px 20px;
+  margin: 10px;
+}
+
+.projects header {
+  text-align: center;
+}
