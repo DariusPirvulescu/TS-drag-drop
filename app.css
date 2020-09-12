@@ -2,3 +2,9 @@
   margin: 1rem;
   background: #f7f7f7
 }
+
+.projects {
+  border: 1px solid lightgray;
+  background-color: #f7f7f7;
+  margin: 5px;
+}

@@ -59,14 +59,26 @@ class ProjectList {
   hostContainer: HTMLDivElement;
   projectsElement: HTMLElement;
 
-  constructor(private status: "active" | "finished") {
+  constructor(private status: "Active" | "Finished") {
     this.template = document.getElementById("project-list")! as HTMLTemplateElement
     this.hostContainer = document.getElementById("app")! as HTMLDivElement;
-    // this.projects = document.getElementById("projects")! as HTMLElement;
 
     const importedNote = document.importNode(this.template.content, true )
     this.projectsElement = importedNote.firstElementChild as HTMLElement
-    this.projectsElement.id = `${this.status} projects`
+    this.projectsElement.id = `${this.status}-projects`
+
+    this.attatch();
+    this.renderList();
+  }
+
+  private renderList() {
+    const listId = `${this.status}-projects-list`
+    this.projectsElement.querySelector("ul")!.id = listId
+    this.projectsElement.querySelector("h2")!.innerHTML = `${this.status} Projects`
+  }
+
+  private attatch() {
+    this.hostContainer.insertAdjacentElement("beforeend", this.projectsElement)
   }
 }
 
@@ -162,3 +174,6 @@ class ProjectForm {
 
 const pr = new ProjectForm();
 pr.attatch();
+
+const activeProjects = new ProjectList("Active")
+const finishedProjects = new ProjectList("Finished")
