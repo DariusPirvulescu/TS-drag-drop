@@ -53,7 +53,26 @@ function validate(validateInput: Validatable) {
   return isValid;
 }
 
-class Project {
+// List
+class ProjectList {
+  template: HTMLTemplateElement;
+  hostContainer: HTMLDivElement;
+  projectsElement: HTMLElement;
+
+  constructor(private status: "active" | "finished") {
+    this.template = document.getElementById("project-list")! as HTMLTemplateElement
+    this.hostContainer = document.getElementById("app")! as HTMLDivElement;
+    // this.projects = document.getElementById("projects")! as HTMLElement;
+
+    const importedNote = document.importNode(this.template.content, true )
+    this.projectsElement = importedNote.firstElementChild as HTMLElement
+    this.projectsElement.id = `${this.status} projects`
+  }
+}
+
+
+// Form
+class ProjectForm {
   template: HTMLTemplateElement;
   hostContainer: HTMLDivElement;
   formElement: HTMLFormElement;
@@ -141,5 +160,5 @@ class Project {
   }
 }
 
-const pr = new Project();
+const pr = new ProjectForm();
 pr.attatch();
