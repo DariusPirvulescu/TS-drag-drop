@@ -1,3 +1,43 @@
+// Project State Manangement
+// singleton class
+class ProjectState {
+  private listeners: any[] = [];
+  private projects: any[] = [];
+  private static instance: ProjectState
+
+  private constructor() {
+    
+  }
+
+  static getInstance() {
+    if (this.instance) {
+      return this.instance
+    }
+    this.instance = new ProjectState()
+    return this.instance
+  }
+
+  addListener(listenerFn: Function){
+    this.listeners.push(listenerFn)
+  }
+
+  addProject(title: string, description: string, numPeople: number) {
+    const newProj = {
+      id: Math.random().toString(),
+      title: title,
+      description: description,
+      people: numPeople
+    }
+    this.projects.push(newProj)
+    for (const listenerFn of this.listeners) {
+      // listenerFn(this.projects = [...this.projects])
+      listenerFn(this.projects.slice())
+    }
+  }
+}
+
+const projState = ProjectState.getInstance()
+
 // Autobind Decorator
 function Binder(_: any, _2: string, descriptor: PropertyDescriptor) {
   const method = descriptor.value;
@@ -58,17 +98,35 @@ class ProjectList {
   template: HTMLTemplateElement;
   hostContainer: HTMLDivElement;
   projectsElement: HTMLElement;
+  assignedProjects: any[];
+
 
   constructor(private status: "Active" | "Finished") {
     this.template = document.getElementById("project-list")! as HTMLTemplateElement
     this.hostContainer = document.getElementById("app")! as HTMLDivElement;
-
-    const importedNote = document.importNode(this.template.content, true )
+    this.assignedProjects = []
+    
+    const importedNote = document.importNode(this.template.content, true)
     this.projectsElement = importedNote.firstElementChild as HTMLElement
     this.projectsElement.id = `${this.status}-projects`
 
+    projState.addListener((project: any[]) => {
+      this.assignedProjects = project;
+      this.renderProjects();
+    })
+
     this.attatch();
     this.renderList();
+  }
+
+  private renderProjects() {
+    const listEl = document.getElementById(`${this.status}-projects-list`)! as HTMLUListElement;
+    for (const proj of this.assignedProjects) {
+      const listItem = document.createElement("li")
+      listItem.textContent = proj.title
+      listEl.appendChild(listItem)
+
+    }
   }
 
   private renderList() {
@@ -157,7 +215,16 @@ class ProjectForm {
   private getValues(event: Event) {
     event.preventDefault();
     const userInput = this.getUserInput();
+
+    // if (Array.isArray(userInput)) {
     if (userInput) {
+      const [ title, description, numPeople ] = userInput
+
+      projState.addProject(
+        title,
+        description,
+        numPeople
+      )
       // this.titleInputEl.value = ""
       // this.descriptionInputEl.value = ""
       // this.peopleInputEl.value = ""
