@@ -1,7 +1,7 @@
-import { Component } from "./base_component.js";
-import { Binder } from "../decorators/binder_decorator.js";
-import { Draggable } from "../interfaces/drag_drop_interfaces.js";
-import { Project } from "../interfaces/project_model.js";
+import { Component } from "./base_component";
+import { Binder } from "../decorators/binder_decorator";
+import { Draggable } from "../interfaces/drag_drop_interfaces";
+import { Project } from "../interfaces/project_model";
 
 // Project Item
 export class ProjectItem

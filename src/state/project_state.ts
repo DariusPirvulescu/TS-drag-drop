@@ -1,4 +1,4 @@
-import { Project, ProjStatus } from "../interfaces/project_model.js";
+import { Project, ProjStatus } from "../interfaces/project_model";
 
 // singleton class
 type Listener<T> = (item: T[]) => void;

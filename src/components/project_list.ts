@@ -1,10 +1,10 @@
-import { Component } from "./base_component.js";
-import { Binder } from "../decorators/binder_decorator.js";
-import { DragTarget } from "../interfaces/drag_drop_interfaces.js";
-import { Project } from "../interfaces/project_model.js";
-import { projState } from "../state/project_state.js";
-import { ProjStatus } from "../interfaces/project_model.js";
-import { ProjectItem } from "./project_item.js";
+import { Component } from "./base_component";
+import { Binder } from "../decorators/binder_decorator";
+import { DragTarget } from "../interfaces/drag_drop_interfaces";
+import { Project } from "../interfaces/project_model";
+import { projState } from "../state/project_state";
+import { ProjStatus } from "../interfaces/project_model";
+import { ProjectItem } from "./project_item";
 
 // List
 export class ProjectList

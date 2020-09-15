@@ -1,7 +1,7 @@
-import { Component } from "./base_component.js";
-import { Validatable, validate } from "../validate/validation.js";
-import { projState } from "../state/project_state.js";
-import { Binder } from "../decorators/binder_decorator.js";
+import { Component } from "./base_component";
+import { Validatable, validate } from "../validate/validation";
+import { projState } from "../state/project_state";
+import { Binder } from "../decorators/binder_decorator";
 
 // Form
 export class ProjectForm extends Component<HTMLDivElement, HTMLFormElement> {
