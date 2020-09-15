@@ -1,3 +1,4 @@
+import { Project, ProjStatus } from "../interfaces/project_model.js"
 
 // singleton class
 type Listener<T> = (item: T[]) => void;
@@ -11,7 +12,7 @@ class State<T> {
 }
 
 // Project State Manangement
-export class ProjectState extends State<Project> {
+class ProjectState extends State<Project> {
   private projects: Project[] = [];
   private static instance: ProjectState;
 

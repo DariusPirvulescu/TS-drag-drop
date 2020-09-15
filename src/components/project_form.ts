@@ -1,3 +1,8 @@
+import { Component } from "./base_component.js"
+import { Validatable, validate } from "../validate/validation.js"
+import { projState } from "../state/project_state.js"
+import { Binder } from "../decorators/binder_decorator.js"
+
 // Form
 export class ProjectForm extends Component<HTMLDivElement, HTMLFormElement> {
 
@@ -76,9 +81,5 @@ export class ProjectForm extends Component<HTMLDivElement, HTMLFormElement> {
     }
     console.log(userInput);
   }
-
   
 }
-
-// const pr = new ProjectForm();
-// console.log(pr)

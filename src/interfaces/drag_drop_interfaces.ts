@@ -1,10 +1,10 @@
 // Drag Events Interface
-interface Draggable {
+export interface Draggable {
   dragSHandler(evt: DragEvent): void,
   dragEHandler(evt: DragEvent): void
 }
 
-interface DragTarget {
+export interface DragTarget {
   dragOverHandler(evt: DragEvent): void,
   dropHandler(evt: DragEvent): void,
   DragLeaveHandler(evt: DragEvent): void

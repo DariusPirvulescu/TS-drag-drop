@@ -1,5 +1,5 @@
 // Autobind Decorator
-function Binder(_: any, _2: string, descriptor: PropertyDescriptor) {
+export function Binder(_: any, _2: string, descriptor: PropertyDescriptor) {
   const method = descriptor.value;
 
   const adjustDescriptor: PropertyDescriptor = {
