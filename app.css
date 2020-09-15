@@ -1,3 +1,8 @@
+#app {
+  width: 70%;
+  margin: auto;
+}
+
 #project-form {
   margin: 1rem;
   background: #f7f7f7
@@ -9,16 +14,34 @@
   margin: 5px;
 }
 
-#active-projects-list{
+#active-projects-list, #finished-projects-list {
   list-style: none;
+  min-height: 30px;
 }
 
-#active-projects-list li {
+#active-projects-list li, #finished-projects-list li {
   border: 1px solid lightgray;
   padding: 5px 20px;
   margin: 10px;
+  background-color: white;
 }
 
 .projects header {
-  text-align: center;
+  background: lightskyblue;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#finished-projects header {
+  background: purple;
+}
+
+.droppable {
+  background-color: #add5ed;
+}
+
+#finished-projects .droppable {
+  background-color: #af72ad;
 }
