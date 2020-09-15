@@ -1,5 +1,8 @@
 // Project Type
-export enum ProjStatus { Active, Finished }
+export enum ProjStatus {
+  Active,
+  Finished,
+}
 
 export class Project {
   constructor(

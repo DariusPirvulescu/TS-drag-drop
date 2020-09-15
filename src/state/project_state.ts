@@ -1,4 +1,4 @@
-import { Project, ProjStatus } from "../interfaces/project_model.js"
+import { Project, ProjStatus } from "../interfaces/project_model.js";
 
 // singleton class
 type Listener<T> = (item: T[]) => void;
@@ -17,7 +17,7 @@ class ProjectState extends State<Project> {
   private static instance: ProjectState;
 
   private constructor() {
-    super()
+    super();
   }
 
   static getInstance() {
@@ -35,20 +35,26 @@ class ProjectState extends State<Project> {
     //   description: description,
     //   people: numPeople,
     // };
-    const newProj = new Project(Math.random().toString(), title, description, numPeople, ProjStatus.Active)
+    const newProj = new Project(
+      Math.random().toString(),
+      title,
+      description,
+      numPeople,
+      ProjStatus.Active
+    );
     this.projects.push(newProj);
     // for (const listenerFn of this.listeners) {
     //   // listenerFn(this.projects = [...this.projects])
     //   listenerFn(this.projects.slice());
     // }
-    this.updateListeners()
+    this.updateListeners();
   }
 
   moveProj(projId: string, projStatus: ProjStatus) {
-    const project = this.projects.find(prj => prj.id === projId)
+    const project = this.projects.find((prj) => prj.id === projId);
     if (project && project.status != projStatus) {
-      project.status = projStatus
-      this.updateListeners()
+      project.status = projStatus;
+      this.updateListeners();
     }
   }
 

@@ -1,17 +1,16 @@
-import { Component } from "./base_component.js"
-import { Validatable, validate } from "../validate/validation.js"
-import { projState } from "../state/project_state.js"
-import { Binder } from "../decorators/binder_decorator.js"
+import { Component } from "./base_component.js";
+import { Validatable, validate } from "../validate/validation.js";
+import { projState } from "../state/project_state.js";
+import { Binder } from "../decorators/binder_decorator.js";
 
 // Form
 export class ProjectForm extends Component<HTMLDivElement, HTMLFormElement> {
-
   titleInputEl: HTMLInputElement;
   descriptionInputEl: HTMLInputElement;
   peopleInputEl: HTMLInputElement;
 
   constructor() {
-    super("project-input", "app", true, "project-form")
+    super("project-input", "app", true, "project-form");
 
     this.titleInputEl = this.element.querySelector(
       "#title"
@@ -81,5 +80,4 @@ export class ProjectForm extends Component<HTMLDivElement, HTMLFormElement> {
     }
     console.log(userInput);
   }
-  
 }
