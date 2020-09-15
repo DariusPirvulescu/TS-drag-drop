@@ -1,3 +1,15 @@
+// Drag Events Interface
+interface Draggable {
+  dragSHandler(evt: DragEvent): void,
+  dragEHandler(evt: DragEvent): void
+}
+
+interface DragTarget {
+  dragOverHandler(evt: DragEvent): void,
+  dragHandler(evt: DragEvent): void,
+  DragLeaveHandler(evt: DragEvent): void
+}
+
 // Project Type
 enum ProjStatus { Active, Finished }
 
@@ -141,7 +153,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement > {
 }
 
 // Project Item
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
   private project: Project;
 
   get persString() {
@@ -162,7 +174,20 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     
   }
 
-  config() {}
+  dragSHandler(event: DragEvent) {
+    console.log(event)
+  }
+
+  dragEHandler(_: DragEvent) {
+    console.log("end drag")
+  }
+
+
+  config() {
+    this.element.addEventListener("dragstart", this.dragSHandler)
+    this.element.addEventListener("dragend", this.dragEHandler)
+
+  }
 
   renderProj() {
     // destructure
